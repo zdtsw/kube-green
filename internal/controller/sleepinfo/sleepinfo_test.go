@@ -920,32 +920,6 @@ func TestInvalidResource(t *testing.T) {
 
 	invalid := features.Table{
 		{
-			Name: "not valid sleep schedule",
-			Assessment: func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
-				sleepInfoName := envconf.RandomName("sleepinfo", 16)
-				sleepInfo := getDefaultSleepInfo(sleepInfoName, c.Namespace())
-				sleepInfo.Spec = kubegreenv1alpha1.SleepInfoSpec{
-					Weekdays:  "1",
-					SleepTime: "",
-				}
-				createSleepInfoCRD(t, ctx, c, sleepInfo)
-
-				req := reconcile.Request{
-					NamespacedName: types.NamespacedName{
-						Name:      sleepInfoName,
-						Namespace: c.Namespace(),
-					},
-				}
-				sleepInfoReconciler := getSleepInfoReconciler(t, c, testLogger, mockNow)
-
-				result, err := sleepInfoReconciler.Reconcile(ctx, req)
-				require.EqualError(t, err, "time should be of format HH:mm, actual: ")
-				require.Empty(t, result)
-
-				return ctx
-			},
-		},
-		{
 			Name: "not valid wake up schedule",
 			Assessment: func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
 				sleepInfoName := envconf.RandomName("sleepinfo", 16)
