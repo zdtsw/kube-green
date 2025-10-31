@@ -66,11 +66,13 @@ type SleepInfoSpec struct {
 	// Exclusion rules are evaluated in AND condition.
 	// +optional
 	// +operator-sdk:csv:customresourcedefinitions:type=spec
+	// +kubebuilder:validation:MaxItems=100
 	ExcludeRef []FilterRef `json:"excludeRef,omitempty"`
 	// IncludeRef define the resource to include from the sleep.
 	// Inclusion rules are evaluated in AND condition.
 	// +optional
 	// +operator-sdk:csv:customresourcedefinitions:type=spec
+	// +kubebuilder:validation:MaxItems=100
 	IncludeRef []FilterRef `json:"includeRef,omitempty"`
 	// If SuspendCronjobs is set to true, on sleep the cronjobs of the namespace will be suspended.
 	// +optional
